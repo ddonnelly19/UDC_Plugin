@@ -1,0 +1,100 @@
+<!--suppress XmlUnboundNsPrefix, XmlUnboundNsPrefix -->
+<idea-plugin>
+    <id>UDC</id>
+    <name>UDC</name>
+    <version>1.0.2</version>
+    <vendor email="udc@hpe.com" url="http://cmshelpcenter.saas.hp.com/CMS/UDCplugin/Content/Udc_plugin.htm">Hewlett
+        Packard Enterprise
+    </vendor>
+    <depends>com.intellij.modules.lang</depends>
+
+    <description><![CDATA[
+     <p><b>UDC</b> is a plugin for <b>UCMDB UD (Universal Discovery) Content development</b>. UDC dramatically simplifies development and deployment of <b>UCMDB</b>. The following features are available:</p>
+
+    <ul>
+     <li>Download resource from the remote UCMDB</li>
+     <li>Create package by the format of UDC template</li>
+     <li>Diff a local file with the one in server</li>
+     <li>Push resource to server</li>
+     <li>Pack a folder when it is in accord with UDC format</li>
+     <li>Deploy package in a zip format to server</li>
+
+    </ul>
+    <p><b>UDC</b> supports branch number 139 (IntelliJ IDEA 14, PyCharm 4) and later product.</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <b>Version 1.0.2</b>
+
+    <ul>
+     <li>Update the UI of "Create Package By Templates..." Action</li>
+     <li>Support for viewing file structure as well as file content in templates</li>
+     <li>Add more templates in "Create Package By Templates..." Action</li>
+     <li>Add "Settings..." Action which supports for directly go to UDC Configuration page</li>
+     <li>Change the minimum required branch number of JetBrain platform from 131 to 139</li>
+    </ul>
+
+    <b>Version 1.0.1</b>(initial release)
+
+    <ul>
+     <li>Fix a display error in UDC configuration page </li>
+    </ul>
+
+
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="139.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <group id="UDC Actions" text="UDC Actions" popup="true" icon="/com/bigU8.png">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="before" relative-to-action="ExternalToolsGroup"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="before" relative-to-action="ExternalToolsGroup"/>
+            <add-to-group group-id="ChangesViewPopupMenu" anchor="last"/>
+            <action id="UDC_DownloadResources" class="com.hpe.ucmdb.udc.action.DownloadAction"
+                    text="Download Resources..."/>
+            <action id="UDC_createPackage" class="com.hpe.ucmdb.udc.action.CreatePackage"
+                    text="Create Package By Templates..."
+                    description="createPackage"/>
+            <separator/>
+            <action id="UDC_DiffResWithServer" class="com.hpe.ucmdb.udc.action.DiffWithServerAction"
+                    text="Diff with Server...">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt D"/>
+            </action>
+            <action id="UDC_PushResources" class="com.hpe.ucmdb.udc.action.PushResources"
+                    text="Push Resources to Server">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift P"/>
+            </action>
+            <separator/>
+            <action id="UDC_PackContentChangeAction" class="com.hpe.ucmdb.udc.action.PackContentAction"
+                    text="Build ZIP Package"/>
+            <action id="UDC_DeployPackage" class="com.hpe.ucmdb.udc.action.DeployPackage" text="Deploy ZIP Package"
+                    description="Deploy ZIP Package"/>
+            <action id="Settings" class="com.hpe.ucmdb.udc.action.Settings" text="Settings..." description="Settings"/>
+        </group>
+    </actions>
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.hpe.ucmdb.udc.UDCSettings"/>
+        <applicationConfigurable instance="com.hpe.ucmdb.udc.UDCConfigUI"/>
+
+    </extensions>
+
+    <project-components>
+        <component>
+            <implementation-class>com.hpe.ucmdb.udc.UDCProject</implementation-class>
+        </component>
+    </project-components>
+
+</idea-plugin>
